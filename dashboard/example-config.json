@@ -1,0 +1,17 @@
+{
+    "Bookmarks": {
+        "Heading One": {
+            "GitHub": "https://github.com/",
+            "Dev.To": "https://dev.to/"
+        },
+        "Heading Two": {
+            "Another Link": "https://example.com/"
+        }
+    },
+    "Prometheus": {
+        "Url": "https://prometheus.example.com/",
+        "NodeExporter": "192.168.1.10:9100",
+        "JobName": "node",
+        "NetworkInterface": "eth0"
+    }
+}

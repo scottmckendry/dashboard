@@ -1,0 +1,29 @@
+version: "3"
+services:
+  dash:
+    image: nginx:latest
+    container_name: dashboard
+    networks:
+      - traefik
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./dashboard:/usr/share/nginx/html:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dash.entrypoints=http"
+      - "traefik.http.routers.dash.rule=Host(`nyx.scottmckendry.tech`)"
+      - "traefik.http.middlewares.dash-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.dash.middlewares=dash-https-redirect"
+      - "traefik.http.routers.dash-secure.entrypoints=https"
+      - "traefik.http.routers.dash-secure.rule=Host(`nyx.scottmckendry.tech`)"
+      - "traefik.http.routers.dash-secure.tls=true"
+      - "traefik.http.routers.dash-secure.service=dash"
+      - "traefik.http.services.dash.loadbalancer.server.port=80"
+      - "traefik.docker.network=home"
+      - "traefik.http.routers.dash-secure.middlewares=ipWhiteList@file, auth@file, ratelimit@file"
+    restart: unless-stopped
+networks:
+  traefik:
+    external: true
