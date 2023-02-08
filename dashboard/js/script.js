@@ -76,7 +76,6 @@ function matchLinks(regex = prevregexp) {
 		document.getElementById("action").action = search;
 		document.getElementById("action").children[0].name = query;
 	}
-	document.getElementById("main").style.height = document.getElementById("main").children[0].offsetHeight + "px";
 }
 
 // Didn't write this block either - came from the same project as matchlinks() and matchinfo().
@@ -110,9 +109,6 @@ function matchInfo(regex = prevregexp) {
 	prevregexp = regex;
 	pivotbuffer = pivotmatch;
 	p = document.getElementById("info");
-	while (p.firstChild) {
-		p.removeChild(p.firstChild);
-	}
 	match = new RegExp(regex ? regex : ".", "i");
 	gmatches = false;
 	for (i = 0; i < Object.keys(sites).length; i++) {
@@ -141,7 +137,6 @@ function matchInfo(regex = prevregexp) {
 			}
 		}
 		section.appendChild(inner);
-		matches ? p.appendChild(section) : false;
 	}
 }
 
@@ -149,7 +144,7 @@ function matchInfo(regex = prevregexp) {
 // Returns metrics from prometheus API for CPU, Mem and Network on host server.
 // Requires prometheus and node-exporter
 function getPromData() {
-	var promConfig = configJson.responseJSON.Prometheus; 
+	var promConfig = configJson.responseJSON.Prometheus;
 	// CPU Usage
 	$.getJSON(`${promConfig.Url}/api/v1/query?query=100%20*%20(1%20-%20avg%20by(instance)(irate(node_cpu_seconds_total{job=%27${promConfig.JobName}%27,mode=%27idle%27,instance=%27${promConfig.NodeExporter}%27}[5m])))`, function (data) {
 		var cpuOutput = data.data.result[0].value[1];
@@ -188,10 +183,10 @@ function getPromData() {
 
 function startTime() {
 	document.getElementById('clock').innerHTML =
-		new Date().toLocaleTimeString('en-nz', {});
+		new Date().toLocaleTimeString('en-nz', { "hour12": false });
 
 	document.getElementById('date').innerHTML =
-		new Date().toLocaleDateString('en-nz', {weekday:"long", month:"long", year:"numeric", day:"numeric"});
+		new Date().toLocaleDateString('en-nz', { weekday: "long", month: "long", year: "numeric", day: "numeric" });
 
 	setTimeout(startTime, 500);
 }
@@ -201,6 +196,7 @@ function start() {
 	matchLinks();
 	matchInfo();
 	startTime();
+	getWebStatus();
 }
 
 window.onload = start();

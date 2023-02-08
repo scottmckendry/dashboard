@@ -1,6 +1,6 @@
 
 html {
-    background: url("../images/bg.jpg") no-repeat center center fixed;
+    background: url("https://images.unsplash.com/photo-1596779845699-dc72d45a3a5b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3000") no-repeat center center fixed;
     background-size: cover;
     font-family: 'Roboto';
     font-size: 1em;
@@ -85,6 +85,7 @@ input {
     padding: 0;
     margin: -.3em;;
     color: #fff;
+    letter-spacing: 1rem;
 }
 
 #date{
